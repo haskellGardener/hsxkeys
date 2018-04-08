@@ -2,7 +2,7 @@
   , NegativeLiterals
   #-}
 {-# OPTIONS_GHC -fwarn-unused-imports #-}
-{-| Time-stamp: <2018-04-08 17:22:28 CDT>
+{-| Time-stamp: <2018-04-08 17:24:22 CDT>
 
 Module      : Lib
 Copyright   : (c) Robert Lee
@@ -65,7 +65,7 @@ import Control.Monad
 import Text.Printf
 
 -- from bytestring:
-import qualified Data.ByteString as B 
+import qualified Data.ByteString as B
 import Data.Word (Word8)
 import Control.Concurrent.Async (concurrently)
 import Control.Concurrent (threadDelay)
@@ -141,7 +141,7 @@ findMyDevice ctx vendorId productId = do
 -- DEVICE_MAP_ENTRY(PI_VID, 0x046A, 1        , 0x0001    , 0x0006, 9         , 2          ) /* XK-8 Stick keyboard*/
 -- DEVICE_MAP_ENTRY(PI_VID, 0x046A, 2        , 0x0001    , 0x0002, 6         , 0          ) /* XK-8 Stick mouse*/
 
-                     
+
 doSomethingWithDevice :: Device -> IO ()
 doSomethingWithDevice dev = do
   putStrLn $ unlines $ deviceInfo dev
@@ -186,7 +186,7 @@ doSomethingWithDevice dev = do
                         noTimeout
 
         setWriteTransferInput writeTrans (B.pack . take mps2 $ [181, 4, 2] ++ repeat 0x00)
-        (szWrite, statusWrite) <- performWriteTransfer writeTrans                     
+        (szWrite, statusWrite) <- performWriteTransfer writeTrans
         -- ((bs, status), (szWrite, statusWrite)) <- concurrently (do rx <- performReadTransfer readTrans
         --                                                            putStrLn "Initial RX completed."
         --                                                            pure rx
@@ -195,17 +195,17 @@ doSomethingWithDevice dev = do
         --                                                            tx <- performWriteTransfer writeTrans
         --                                                            -- threadDelay 100000
         --                                                            -- setWriteTransferInput writeTrans (B.pack . take mps2 $ [0x0, 214] ++ repeat 0x00)
-        --                                                            -- performWriteTransfer writeTrans                      
+        --                                                            -- performWriteTransfer writeTrans
         --                                                            -- threadDelay 100000
         --                                                            -- setWriteTransferInput writeTrans (B.pack . take mps2 $ [0x0, 193] ++ repeat 0x00)
-        --                                                            -- performWriteTransfer writeTrans                      
+        --                                                            -- performWriteTransfer writeTrans
         --                                                            putStrLn "Initial TX completed."
         --                                                            pure tx
         --                                                        )
         printf "Write %i bytes with status: %s\n" szWrite (show statusWrite)
         -- printf "Read %i bytes with status: %s\n" (B.length bs) (show status)
         -- printBytes bs
-                       
+
         -- Performing I/O:
         forever $ do
           (bs, status) <- performReadTransfer readTrans
@@ -225,15 +225,16 @@ doSomethingWithDevice dev = do
 -- ---------------------------------------------------------------------------
 --
 -- https://www.kernel.org/doc/html/v4.12/input/uinput.html
+-- https://www.freedesktop.org/software/libevdev/doc/latest/
 --
 -- ---------------------------------------------------------------------------
-                   
+
           -- setWriteTransferInput writeTrans (B.pack $ [leftLEDs, green, modeFlash] ++ replicate 32 0x00)
           -- (szWrite,statusWrite) <- performWriteTransfer writeTrans
           -- printf "Write %i bytes with status: %s\n" szWrite (show statusWrite)
           setWriteTransferInput writeTrans (B.pack $ [flashFreq, 50] ++ replicate 33 0x00) -- second number is in milliseconds (both flash same rate).
           (szWrite,statusWrite) <- performWriteTransfer writeTrans
-          
+
           printf "Write %i bytes with status: %s\n" szWrite (show statusWrite)
           -- setWriteTransferInput writeTrans (B.pack $ [toggleBacklight, 0] ++ replicate 32 0x00)
           -- (szWrite,statusWrite) <- performWriteTransfer writeTrans
@@ -282,8 +283,8 @@ DeviceDesc { deviceUSBSpecReleaseNumber = (0,1,1,0)
            , deviceSubClass = 0
            , deviceProtocol = 0
            , deviceMaxPacketSize0 = 8
-           , deviceVendorId = 1523   -- 05f3 PI Engineering, Inc. 
-           , deviceProductId = 1130  -- 046a XK-8 Stick           
+           , deviceVendorId = 1523   -- 05f3 PI Engineering, Inc.
+           , deviceProductId = 1130  -- 046a XK-8 Stick
            , deviceReleaseNumber = (0,3,0,0)
            , deviceManufacturerStrIx = Just 1
            , deviceProductStrIx = Just 2
@@ -399,7 +400,7 @@ ConfigDesc { configValue = 1
 
 
 
-             
+
 -- -- Local Imports
 
 -- -- Explicit Imports
@@ -412,7 +413,7 @@ ConfigDesc { configValue = 1
 
 -- import Prelude
 -- import System.USB
-  
+
 -- -- End of Imports
 -- -- --------------------------------------------------------------------------------------------------------------------------------------------
 
