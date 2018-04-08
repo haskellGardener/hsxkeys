@@ -2,7 +2,7 @@
   , NegativeLiterals
   #-}
 {-# OPTIONS_GHC -fwarn-unused-imports #-}
-{-| Time-stamp: <2018-04-08 15:12:19 CDT>
+{-| Time-stamp: <2018-04-08 17:22:28 CDT>
 
 Module      : Lib
 Copyright   : (c) Robert Lee
@@ -221,6 +221,12 @@ doSomethingWithDevice dev = do
                    . B.drop 2                                  -- :: B.ByteString
                    $ bs                                        -- :: B.ByteString
           putStrLn $ show $ sort keys
+
+-- ---------------------------------------------------------------------------
+--
+-- https://www.kernel.org/doc/html/v4.12/input/uinput.html
+--
+-- ---------------------------------------------------------------------------
                    
           -- setWriteTransferInput writeTrans (B.pack $ [leftLEDs, green, modeFlash] ++ replicate 32 0x00)
           -- (szWrite,statusWrite) <- performWriteTransfer writeTrans
